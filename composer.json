@@ -3,5 +3,16 @@
         "silex/silex": "1.0.*",
         "doctrine/dbal": "2.2.*"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "authors": [
+        {
+        "name": "Chavão",
+        "email": "fale@chavao.net"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "" : "src/"
+        }
+    }
 }
