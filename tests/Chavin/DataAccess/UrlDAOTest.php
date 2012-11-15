@@ -1,6 +1,10 @@
 <?php
 namespace Chavin\DataAccess;
 
+use \PDO;
+use \DateTime;
+use Chavin\DataAccess\Entity\Url;
+
 class UrlDAOTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -11,7 +15,7 @@ class UrlDAOTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->pdo = new \PDO("sqlite::memory:");
+        $this->pdo = new PDO("sqlite::memory:");
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS url (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,44 +34,46 @@ class UrlDAOTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testInsertAUrl()
+    public function testInsertAUrlAndGetRetrievedUrlShouldWork()
     {
-        $urlDao = new UrlDAO($this->pdo);
+        $urlEntity = new Url();
         $url = "http://www.google.com";
-        $id = $urlDao->save($url);
+        $urlEntity->setUrl($url);
+        $urlEntity->setDateTime(new DateTime("now"));
+        $urlEntity->setUserIp("192.168.1.6");
+
+        $urlDao = new UrlDAO($this->pdo);
+        $id = $urlDao->save($urlEntity);
 
         $this->assertEquals(1, $id);
 
         $retrievedUrl = $urlDao->get($id);
 
-        $this->assertEquals($url, $retrievedUrl);
+        $this->assertInstanceOf("Chavin\DataAccess\Entity\Url", $retrievedUrl);
+        $this->assertEquals($retrievedUrl->getUrl(), $urlEntity->getUrl());
+        $this->assertEquals($retrievedUrl->getDateTime(), $urlEntity->getDateTime());
+        $this->assertEquals($retrievedUrl->getUserIp(), $urlEntity->getUserIp());
+    }
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testInsertAUrlWithEmptyUrlParameterShouldThrownAnException()
+    {
+        $urlEntity = new Url();
+        $urlDao = new UrlDAO($this->pdo);
+        $id = $urlDao->save($urlEntity);
+
+        $this->assertNotEquals(1, $id);
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testInsertAUrlWithEmptyUrlParameter()
+    public function testGetAUrlWithEmptyIdParameterShouldThrownAnException()
     {
         $urlDao = new UrlDAO($this->pdo);
-        $urlDao->save("");
-    }
-
-    /**
-     * @depends testInsertAUrl
-     */
-    public function testComputesAccessAndRetrievesNumberOfAccess()
-    {
-        $urlDao = new UrlDAO($this->pdo);
-        $url = "http://www.google.com";
-        $id = $urlDao->save($url);
-
-        for ($i = 0; $i < 10; $i++) {
-            $urlDao->access($id);
-        }
-
-        $numberOfAccess = $urlDao->count($id);
-
-        $this->assertEquals(10, $numberOfAccess);
+        $urlDao->get("");
     }
 
     protected function tearDown()
