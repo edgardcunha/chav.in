@@ -1,7 +1,8 @@
 {
     "require": {
         "silex/silex": "1.0.*",
-        "doctrine/dbal": "2.2.*"
+        "doctrine/dbal": "2.2.*",
+        "chavao/base62": "dev-master"
     },
     "minimum-stability": "dev",
     "authors": [
