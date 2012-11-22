@@ -1,7 +1,7 @@
 {
     "require": {
-        "silex/silex": "1.0.*",
-        "doctrine/dbal": "2.2.*",
+        "Respect/Rest": "dev-master",
+        "twig/twig": "1.*",
         "chavao/base62": "dev-master"
     },
     "minimum-stability": "dev",
