@@ -2,7 +2,7 @@
 namespace Chavin\DataAccess;
 
 use \PDO;
-use Chavin\DataAccess\Entity\Access;
+use \Chavin\DataAccess\Entity\Access;
 
 class AccessDAOTest extends \PHPUnit_Framework_TestCase
 {

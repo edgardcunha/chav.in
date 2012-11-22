@@ -3,7 +3,7 @@ namespace Chavin\DataAccess;
 
 use \PDO;
 use \DateTime;
-use Chavin\DataAccess\Entity\Url;
+use \Chavin\DataAccess\Entity\Url;
 
 class UrlDAOTest extends \PHPUnit_Framework_TestCase
 {

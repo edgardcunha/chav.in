@@ -4,7 +4,7 @@ namespace Chavin\DataAccess;
 use \PDO;
 use \InvalidArgumentException as Argument;
 use \RuntimeException;
-use Chavin\DataAccess\Entity\Url;
+use \Chavin\DataAccess\Entity\Url;
 
 class UrlDAO
 {

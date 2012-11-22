@@ -4,7 +4,7 @@ namespace Chavin\DataAccess;
 use \PDO;
 use \RuntimeException;
 use \InvalidArgumentException as Argument;
-use Chavin\DataAccess\Entity\Access;
+use \Chavin\DataAccess\Entity\Access;
 
 class AccessDAO
 {
